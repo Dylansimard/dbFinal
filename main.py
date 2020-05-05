@@ -86,7 +86,7 @@ def stripEnd(input):
     return input
 
 def createDB(dbName):
-    path = os.getcwd() + "\\" + dbName
+    path = os.getcwd() + "//" + dbName
 
     if os.path.isdir(path):
         print("!Failed to create database " + dbName + " because it already exists.")
@@ -97,7 +97,7 @@ def createDB(dbName):
 
 
 def dropDB(dbName):
-    path = os.getcwd() + "\\" + dbName
+    path = os.getcwd() + "//" + dbName
 
     if os.path.isdir(path):
         try:
@@ -115,7 +115,7 @@ def useDB(dbName):
     global currDB
     global usingDB
 
-    path = os.getcwd() + "\\" + dbName
+    path = os.getcwd() + "//" + dbName
 
     if os.path.isdir(path):
         usingDB = True
@@ -146,7 +146,7 @@ def createTable(input):
 
 
 
-    path = os.getcwd() + "\\" + currDB + "\\" + tblName + ".tbl"
+    path = os.getcwd() + "//" + currDB + "//" + tblName + ".tbl"
 
     if usingDB:
         if not os.path.isfile(path):
@@ -188,7 +188,7 @@ def dropTable(input):
     splitInput = input.split()
     tblName = stripEnd(splitInput[-1])
 
-    path = os.getcwd() + "\\" + currDB + "\\" + tblName + ".tbl"
+    path = os.getcwd() + "//" + currDB + "//" + tblName + ".tbl"
 
     if os.path.isfile(path):
         os.remove(path)
@@ -269,8 +269,8 @@ def select(input):
                 tbl1 = tables[0].split()[0]
                 tbl2 = tables[1].split()[0]
 
-                path1 = os.getcwd() + "\\" + currDB + "\\" + tbl1 + ".tbl"
-                path2 = os.getcwd() + "\\" + currDB + "\\" + tbl2 + ".tbl"
+                path1 = os.getcwd() + "//" + currDB + "//" + tbl1 + ".tbl"
+                path2 = os.getcwd() + "//" + currDB + "//" + tbl2 + ".tbl"
 
                 if os.path.isfile(path1) and os.path.isfile(path2):
                     file1 = open(path1, "r")
@@ -345,8 +345,8 @@ def select(input):
                     secondTbl = secondTbl.split("on")[0].strip()
                     secondTbl = secondTbl.split()[0].strip()
 
-                    path1 = os.getcwd() + "\\" + currDB + "\\" + firstTbl + ".tbl"
-                    path2 = os.getcwd() + "\\" + currDB + "\\" + secondTbl + ".tbl"
+                    path1 = os.getcwd() + "//" + currDB + "//" + firstTbl + ".tbl"
+                    path2 = os.getcwd() + "//" + currDB + "//" + secondTbl + ".tbl"
 
                     if os.path.isfile(path1) and os.path.isfile(path2):
 
@@ -405,8 +405,8 @@ def select(input):
                     secondTbl = secondTbl.split("on")[0].strip();
                     secondTbl = secondTbl.split()[0].strip()
 
-                    path1 = os.getcwd() + "\\" + currDB + "\\" + firstTbl + ".tbl"
-                    path2 = os.getcwd() + "\\" + currDB + "\\" + secondTbl + ".tbl"
+                    path1 = os.getcwd() + "//" + currDB + "//" + firstTbl + ".tbl"
+                    path2 = os.getcwd() + "//" + currDB + "//" + secondTbl + ".tbl"
 
                     if os.path.isfile(path1) and os.path.isfile(path2):
                         file1 = open(path1, "r")
@@ -463,7 +463,7 @@ def select(input):
 
 
         else:
-            path = os.getcwd() + "\\" + currDB + "\\" + tblName + ".tbl"
+            path = os.getcwd() + "//" + currDB + "//" + tblName + ".tbl"
             # != case
             if os.path.isfile(path) and conditions.find("!=") != -1:
 
@@ -527,7 +527,7 @@ def select(input):
 
     # No conditions only query
     else:
-        path = os.getcwd() + "\\" + currDB + "\\" + tblName + ".tbl"
+        path = os.getcwd() + "//" + currDB + "//" + tblName + ".tbl"
         if os.path.isfile(path):
             command = command.split()[0].strip()
 
@@ -550,7 +550,7 @@ def alter(input):
     split1 = split1[1].split()
     tblName = split1[0]
 
-    path = os.getcwd() + "\\" + currDB + "\\" + tblName + ".tbl"
+    path = os.getcwd() + "//" + currDB + "//" + tblName + ".tbl"
 
     # split by add, the last element will contain what needs to be added
     # only currently supporting add, have not seen any other necessary implementations in sql scripts
@@ -585,13 +585,13 @@ def insert(input):
     split1 = input.split("into")
     tblName = split1[1].split()[0]
 
-    path = os.getcwd() + "\\" + currDB + "\\" + tblName + ".tbl"
+    path = os.getcwd() + "//" + currDB + "//" + tblName + ".tbl"
 
-    # first remove all '\t' from the input
+    # first remove all '/t' from the input
     # then find the first '(', values to enter will  follow
     # then split by ',' to get individual values
 
-    input = re.sub(r'\t', '', input)
+    input = re.sub(r'/t', '', input)
 
     valueLoc = input.find('(')
 
@@ -604,7 +604,7 @@ def insert(input):
 
     if os.path.isfile(path):
         file = open(path, "a+")
-        file.write("\n")
+        file.write("/n")
         file.write("|".join(singleValues))
         print("1 new record inserted")
 
@@ -641,7 +641,7 @@ def update(input):
     secondCond[1] = secondCond[1].strip()
 
 
-    path = os.getcwd() + "\\" + currDB + "\\" + tblName + ".tbl"
+    path = os.getcwd() + "//" + currDB + "//" + tblName + ".tbl"
 
     if os.path.isfile(path):
 
@@ -694,7 +694,7 @@ def update(input):
                         values[firstCondIndex] = firstCond[1]
                         modified += 1
                         if firstCondIndex == totalVars-1:
-                            values[firstCondIndex] += "\n"
+                            values[firstCondIndex] += "/n"
 
                 counter += 1
             counter = 0
@@ -722,7 +722,7 @@ def delete(input):
     temp = input.split("where")
     tblName = temp[0].split()[-1]
 
-    path = os.getcwd() + "\\" + currDB + "\\" + tblName + ".tbl"
+    path = os.getcwd() + "//" + currDB + "//" + tblName + ".tbl"
 
     if os.path.isfile(path):
 
